@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon TCG - Projet ESGI</title>
+  <link rel="stylesheet" href="styles/general.css">
+  <link rel="stylesheet" href="styles/card.css">
+</head>
+<body>
+  <header>
+    <div class="header-pokeball">
+      <img src="assets/pokeball-bg.svg" alt="Pokeball" />
+    </div>
+  </header>
+  <main>
+    <div id="game-area">
+      <section id="deck-section">
+        <h2>Ma pioche</h2>
+        <div id="deck"></div>
+        <button id="draw-btn">Tirer 5 cartes</button>
+        <div id="timer"></div>
+      </section>
+      <section id="hand-section">
+        <h2>Ma main</h2>
+        <div id="hand"></div>
+      </section>
+    </div>
+    <section id="battle-section">
+      <h2>Combat</h2>
+      <div id="battle"></div>
+    </section>
+  </main>
+  <div id="modal-root"></div>
+  <script type="module" src="app/main.js"></script>
+</body>
+</html>
