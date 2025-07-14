@@ -1,0 +1,23 @@
+/* Styles pour le système de timer */
+
+/* Décompte simple sous le bouton */
+.timer-display {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+/* Bouton désactivé pendant le cooldown */
+.draw-btn.disabled {
+  background: linear-gradient(135deg, #9e9e9e, #757575) !important;
+  color: white !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: 0 2px 8px rgba(158, 158, 158, 0.3) !important;
+}
+
+.draw-btn.disabled:hover {
+  background: linear-gradient(135deg, #9e9e9e, #757575) !important;
+  transform: none !important;
+  box-shadow: 0 2px 8px rgba(158, 158, 158, 0.3) !important;
+}

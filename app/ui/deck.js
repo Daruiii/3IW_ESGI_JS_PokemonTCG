@@ -4,9 +4,10 @@ import { createCardBack } from './card.js';
 export class DeckManager {
 
 
-  constructor(gameState, onCardDrawn) {
+  constructor(gameState, onCardDrawn, timer = null) {
     this.gameState = gameState;
     this.onCardDrawn = onCardDrawn; // met à jour l'affichage de la pioche et de la main (fonction de main.js)
+    this.timer = timer; // référence au timer pour vérifier les cooldowns
     this.deckElement = document.getElementById('deck');
     this.handElement = document.getElementById('hand');
     
@@ -85,7 +86,7 @@ export class DeckManager {
     this.handElement.classList.remove('drag-over');
     if (data !== 'deck-card') return; // Si ce n'est pas une carte de la pioche, on ne fait rien
   
-    // Piocher une carte avec animation
+    // Piocher une carte (pas de cooldown pour les tirages individuels)
     this.drawCardFromDeck();
   }
 
@@ -93,6 +94,8 @@ export class DeckManager {
   
   handleCardClick(e) {
     e.preventDefault();
+    
+    // Piocher une carte (pas de cooldown pour les tirages individuels)
     this.drawCardFromDeck();
   }
 
