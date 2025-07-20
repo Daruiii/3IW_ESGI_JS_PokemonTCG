@@ -1,7 +1,10 @@
-// Timer simple pour les tirages (sans localStorage pour commencer)
+// Timer pour les tirages de boosters avec persistance
 export class Timer {
   constructor() {
-    this.COOLDOWN = 10; // 10 secondes pour tester l'UI
+    // COOLDOWN de 5 minutes (300 secondes) comme demandé dans l'énoncé
+    // Pour les tests, vous pouvez temporairement réduire à 10 secondes :
+    // this.COOLDOWN = 10; // 10 secondes pour test
+    this.COOLDOWN = 300; // 5 minutes (300 secondes) - VERSION FINALE
     this.lastDraw = 0;
     this.isActive = false;
   }
@@ -12,12 +15,16 @@ export class Timer {
   }
 
   // Démarre le cooldown
-  startCooldown() {
+  startCooldown(onComplete) {
     this.isActive = true;
     this.lastDraw = Date.now();
     
     setTimeout(() => {
       this.isActive = false;
+      // Appeler la callback pour sauvegarder l'état
+      if (onComplete) {
+        onComplete();
+      }
     }, this.COOLDOWN * 1000);
   }
 

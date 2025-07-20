@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="styles/general.css">
   <link rel="stylesheet" href="styles/card.css">
   <link rel="stylesheet" href="styles/timer.css">
+  <link rel="stylesheet" href="styles/tabs.css">
+  <link rel="stylesheet" href="styles/modals.css">
 </head>
 <body>
   <header>
@@ -15,24 +17,74 @@
     </div>
   </header>
   <main>
-    <div id="game-area">
-      <section id="deck-section">
-        <h2>Ma pioche</h2>
-        <div id="deck"></div>
-        <button id="draw-btn">Tirer 5 cartes</button>
-        <div id="timer"></div>
-      </section>
-      <section id="hand-section">
-        <h2>Ma main</h2>
-        <div id="hand"></div>
-      </section>
-    </div>
-    <section id="battle-section">
-      <h2>Actions</h2>
-      <div id="battle">
-        <button id="new-game-btn" class="new-game-btn">🔄 Nouvelle partie</button>
+    <!-- Navigation par onglets -->
+    <nav class="tabs-nav">
+      <button class="tab-btn active" data-tab="boosters">📦 Boosters</button>
+      <button class="tab-btn" data-tab="collection">🎒 Collection</button>
+      <button class="tab-btn" data-tab="combat">⚔️ Combat</button>
+      <button class="tab-btn" data-tab="settings">⚙️ Paramètres</button>
+    </nav>
+
+    <!-- Contenu des onglets -->
+    <div class="tabs-content">
+      <!-- Onglet Boosters -->
+      <div class="tab-content active" id="tab-boosters">
+        <div class="booster-area">
+          <h2>📦 Ouvrir des boosters</h2>
+          <div class="booster-info">
+            <p>Tirez un booster de 5 cartes toutes les 5 minutes !</p>
+            <button id="draw-btn" class="booster-btn">Tirer un booster</button>
+            <div id="timer"></div>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <!-- Onglet Collection -->
+      <div class="tab-content" id="tab-collection">
+        <div class="collection-header">
+          <h2>🎒 Ma Collection</h2>
+          <span id="collection-count" class="collection-count">0 cartes</span>
+        </div>
+        <div id="collection-preview" class="collection-preview">
+          <p>Vos cartes s'afficheront ici</p>
+        </div>
+      </div>
+
+      <!-- Onglet Combat -->
+      <div class="tab-content" id="tab-combat">
+        <div class="combat-area">
+          <div class="deck-section">
+            <h3>⚔️ Deck de Combat</h3>
+            <div class="deck-info">
+              <div id="battle-deck" class="battle-deck-container"></div>
+              <div class="deck-stats">
+                <span id="deck-count" class="deck-count">0/30 cartes</span>
+                <div class="deck-actions">
+                  <button id="shuffle-deck-btn" class="deck-action-btn">🔀 Mélanger</button>
+                  <button id="clear-deck-btn" class="deck-action-btn">🗑️ Vider</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="hand-section">
+            <h3>🤚 Main (5 cartes max)</h3>
+            <div id="hand" class="hand-container"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Paramètres -->
+      <div class="tab-content" id="tab-settings">
+        <div class="settings-area">
+          <h2>⚙️ Paramètres</h2>
+          <div class="settings-options">
+            <button id="new-game-btn" class="danger-btn">🔄 Nouvelle partie</button>
+            <p class="warning-text">⚠️ Attention : Ceci supprimera toutes vos données</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   <div id="modal-root"></div>
   <script type="module" src="app/main.js"></script>

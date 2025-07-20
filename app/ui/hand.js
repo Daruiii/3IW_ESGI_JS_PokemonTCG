@@ -7,7 +7,7 @@ export class HandManager {
     this.handElement = document.getElementById('hand');
   }
 
-  // Affiche la main (rendu normal)
+  // Affiche la main (rendu normal, jamais utilisée dans le code mais on sait jamais)
   renderHand() {
     this.handElement.innerHTML = '';
     

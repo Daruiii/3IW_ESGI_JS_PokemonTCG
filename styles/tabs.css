@@ -1,0 +1,417 @@
+/* === SYSTÈME D'ONGLETS === */
+
+.tabs-nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+  position: relative;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  color: #6b7280;
+  border-radius: 12px 12px 0 0;
+  margin: 0 0.25rem;
+}
+
+.tab-btn:hover {
+  color: #374151;
+}
+
+.tab-btn.active {
+  color: #3b82f6;
+  border-bottom: 3px solid #3b82f6;
+}
+
+.tabs-content {
+  min-height: 50vh;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === ONGLET BOOSTERS === */
+
+.booster-area {
+  text-align: center;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.booster-info {
+  background: transparent;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.booster-info p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.booster-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.booster-btn:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.booster-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* === ONGLET COLLECTION === */
+
+.collection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: transparent;
+  border-radius: 12px;
+}
+
+.collection-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.collection-btn:hover {
+  background: #2563eb;
+}
+
+.collection-count {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #374151;
+  background: transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.collection-preview {
+  padding: 0.5rem;
+}
+
+.collection-preview .collection-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+
+.collection-preview .collection-filters input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s;
+}
+
+.collection-preview .collection-filters input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.collection-preview .collection-filters select {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.collection-preview .collection-filters select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.collection-preview .collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  background: transparent;
+  border-radius: 6px;
+  padding: 0.5rem;
+  min-height: 250px;
+}
+
+/* === ONGLET COMBAT === */
+
+.combat-area {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.deck-section {
+  background: transparent;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.deck-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.battle-deck-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 1rem;
+  border: 2px dashed rgba(209, 213, 219, 0.3);
+  border-radius: 12px;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.battle-deck-container:hover {
+  border-color: #3b82f6;
+}
+
+.deck-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.deck-count {
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: transparent;
+  color: #374151;
+}
+
+.deck-count.empty {
+  color: #6b7280;
+  background: transparent;
+}
+
+.deck-count.high {
+  color: #f59e0b;
+  background: transparent;
+}
+
+.deck-count.full {
+  color: #dc2626;
+  background: transparent;
+}
+
+.deck-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.deck-action-btn {
+  background: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.deck-action-btn:hover {
+  background: #4b5563;
+}
+
+.hand-section {
+  background: transparent;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.hand-container {
+  display: flex;
+  gap: 0.8rem;
+  min-height: 240px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 2px dashed rgba(209, 213, 219, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  background: transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  min-width: 850px; /* Assez large pour 5 cartes de 150px + gaps */
+}
+
+.hand-container::before {
+  content: "Glissez ou cliquez sur une carte du deck";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s;
+  text-align: center;
+}
+
+.hand-container:not(:empty)::before {
+  opacity: 0;
+}
+
+.hand-container.drag-over {
+  border-color: #3b82f6;
+  background: transparent;
+  transform: scale(1.02);
+}
+
+.empty-deck {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.empty-deck p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.empty-deck small {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+/* === ONGLET PARAMÈTRES === */
+
+.settings-area {
+  text-align: center;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.settings-options {
+  background: transparent;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.danger-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.danger-btn:hover {
+  background: #b91c1c;
+}
+
+.warning-text {
+  margin-top: 1rem;
+  color: #dc2626;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* === RESPONSIVE === */
+
+@media (max-width: 768px) {
+  .tabs-nav {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .tab-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    margin: 0.25rem;
+  }
+  
+  .combat-area {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .collection-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .booster-info {
+    padding: 1.5rem;
+  }
+  
+  .booster-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .hand-container {
+    min-width: auto;
+    gap: 0.5rem;
+    padding: 0.8rem;
+  }
+}
