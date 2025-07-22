@@ -516,3 +516,98 @@
     min-height: 140px;
   }
 }
+
+/* === STYLES POUR LES BOUTONS HOVER DE LA COLLECTION === */
+
+/* Container pour les cartes de la collection avec position relative pour les boutons */
+.collection-card {
+  position: relative;
+  overflow: visible;
+}
+
+/* Overlay des boutons hover */
+.card-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 20;
+}
+
+.collection-card:hover .card-hover-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Styles des boutons hover */
+.card-hover-button {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  min-width: 120px;
+  text-align: center;
+}
+
+.card-hover-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #45a049 0%, #4CAF50 100%);
+}
+
+.card-hover-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Bouton "Voir description" avec couleur différente */
+.card-hover-button.description-btn {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+}
+
+.card-hover-button.description-btn:hover {
+  background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
+}
+
+/* Bouton désactivé pour les cartes déjà dans le deck */
+.card-hover-button:disabled {
+  background: linear-gradient(135deg, #999 0%, #777 100%);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.card-hover-button:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #999 0%, #777 100%);
+}
+
+/* Version mobile des boutons */
+@media (max-width: 700px) {
+  .card-hover-button {
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    min-width: 90px;
+  }
+  
+  .card-hover-overlay {
+    gap: 6px;
+  }
+}
