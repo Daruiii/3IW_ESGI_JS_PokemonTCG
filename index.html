@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
   <link rel="stylesheet" href="styles/timer.css">
   <link rel="stylesheet" href="styles/tabs.css">
   <link rel="stylesheet" href="styles/modals.css">
+  <link rel="stylesheet" href="styles/combat.css">
 </head>
+
 <body>
   <header>
     <div class="header-pokeball">
@@ -66,12 +69,34 @@
               </div>
             </div>
           </div>
-          
+
           <div class="hand-section">
             <h3>🤚 Main (5 cartes max)</h3>
             <div id="hand" class="hand-container"></div>
           </div>
         </div>
+
+        <section id="combat-zone">
+          <h2>Combat</h2>
+          <div class="field player-field">
+            <h3>Votre équipe</h3>
+            <div class="slot-row" id="player-slots">
+              <div class="slot" data-index="0"></div>
+              <div class="slot" data-index="1"></div>
+              <div class="slot" data-index="2"></div>
+            </div>
+          </div>
+
+          <div class="field enemy-field">
+            <h3>Équipe ennemie</h3>
+            <div class="slot-row" id="enemy-slots">
+              <div class="slot" data-index="0"></div>
+              <div class="slot" data-index="1"></div>
+              <div class="slot" data-index="2"></div>
+            </div>
+          </div>
+        </section>
+
       </div>
 
       <!-- Onglet Paramètres -->
@@ -89,4 +114,5 @@
   <div id="modal-root"></div>
   <script type="module" src="app/main.js"></script>
 </body>
+
 </html>

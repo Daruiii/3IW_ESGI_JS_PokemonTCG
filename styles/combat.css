@@ -1,0 +1,221 @@
+/* Zone de combat */
+#combat-zone {
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+#combat-zone h2 {
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+/* Terrain de combat */
+.field {
+  background: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.field h3 {
+  margin: 0 0 15px 0;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Rangées de slots */
+.slot-row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.slot {
+  width: 120px;
+  height: 160px;
+  border: 3px dashed #ccc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.7);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.slot:hover {
+  border-color: #4ecdc4;
+  background: rgba(78, 205, 196, 0.1);
+  transform: scale(1.05);
+}
+
+.slot.occupied {
+  border-color: #28a745;
+  background: rgba(40, 167, 69, 0.1);
+}
+
+/* Cartes dans les slots */
+.slot .pokemon-card {
+  margin: 0;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+.slot .pokemon-card:hover {
+  transform: scale(0.9);
+  z-index: 10;
+}
+
+/* Contrôles de combat */
+.combat-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.combat-controls button {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#attack-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ff5252);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+#attack-btn:hover {
+  background: linear-gradient(45deg, #ff5252, #f44336);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+#attack-btn:active {
+  transform: translateY(0);
+}
+
+#attack-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Animations d'attaque */
+@keyframes attackFlash {
+  0% { background: rgba(255, 107, 107, 0.3); }
+  50% { background: rgba(255, 107, 107, 0.8); }
+  100% { background: rgba(255, 107, 107, 0.3); }
+}
+
+.attacking {
+  animation: attackFlash 0.5s ease-in-out;
+}
+
+/* Animations de dégâts */
+@keyframes damageShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.taking-damage {
+  animation: damageShake 0.3s ease-in-out;
+}
+
+/* Effets de KO */
+.ko {
+  opacity: 0.3;
+  transform: rotate(90deg) scale(0.8);
+  transition: all 0.5s ease;
+}
+
+/* Status du combat */
+.combat-status {
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  font-weight: bold;
+}
+
+.combat-status.player-turn {
+  background: rgba(78, 205, 196, 0.2);
+  border: 2px solid #4ecdc4;
+}
+
+.combat-status.enemy-turn {
+  background: rgba(255, 107, 107, 0.2);
+  border: 2px solid #ff6b6b;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .slot-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .slot {
+    width: 100px;
+    height: 140px;
+  }
+  
+  .combat-controls {
+    flex-direction: column;
+  }
+  
+  .combat-controls button {
+    width: 100%;
+  }
+}
+
+/* Transition pour les changements d'état */
+.field, .slot, .combat-controls {
+  transition: all 0.3s ease;
+}
+
+/* Effets de particules (optionnel) */
+.combat-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ffeb3b;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particle 1s ease-out forwards;
+}
+
+@keyframes particle {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translate(100px, -100px);
+  }
+}

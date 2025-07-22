@@ -4,6 +4,7 @@ import { BattleDeckManager } from './ui/battleDeck.js';
 import { HandManager } from './ui/hand.js';
 import { TabsManager } from './ui/tabs.js';
 import { BoosterManager } from './ui/booster.js';
+import { CombatManager } from './ui/combat.js';
 import { Timer } from './timer.js';
 
 // État du jeu (on initialise gameState qui servira à stocker la collection, le deck de combat et la main
@@ -25,6 +26,7 @@ let handManager; // Gestion de la main
 let tabsManager; // Gestion des onglets
 let boosterManager; // Gestion des boosters
 let timer; // Gestion du cooldown des boosters
+let combatManager; // Gestion du combat
 
 // GESTION DU LOCALSTORAGE
 
@@ -109,6 +111,7 @@ function onGameStateChanged() {
   collectionManager.renderCollection();
   battleDeckManager.renderBattleDeck();
   handManager.renderHandWithAnimation(); // Toujours avec animation
+  combatManager.refresh(); // Rafraîchir l'affichage du combat
   
   // Toujours sauvegarder
   saveState();
@@ -237,6 +240,9 @@ function init() {
     handManager = new HandManager(gameState);
     boosterManager = new BoosterManager(gameState, onGameStateChanged);
     
+    // Initialiser le gestionnaire de combat
+    combatManager = new CombatManager(gameState, onGameStateChanged);
+
     // Affichage initial car se lance pas tout seul
     collectionManager.renderCollection();
     battleDeckManager.renderBattleDeck();
