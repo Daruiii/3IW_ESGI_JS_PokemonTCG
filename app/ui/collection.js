@@ -100,8 +100,8 @@ export class CollectionManager {
         card.appendChild(badge);
       }
       
-      // Interaction pour ajouter au deck
-      this.setupCardInteraction(card, cards[0]);
+      // Créer l'overlay avec les boutons hover
+      this.createCardHoverOverlay(card, cards[0]);
       
       grid.appendChild(card);
     });
@@ -178,6 +178,156 @@ export class CollectionManager {
     }
   }
 
+  // Créer l'overlay avec les boutons hover pour une carte
+  createCardHoverOverlay(card, cardData) {
+    const overlay = document.createElement('div');
+    overlay.className = 'card-hover-overlay';
+    
+    // Vérifier si la carte est déjà dans le deck
+    const alreadyInDeck = this.isCardInBattleSystem(cardData.name);
+    
+    // Bouton "Ajouter au deck"
+    const addButton = document.createElement('button');
+    addButton.className = 'card-hover-button';
+    addButton.textContent = alreadyInDeck ? 'Déjà dans le deck' : 'Ajouter au deck';
+    addButton.disabled = alreadyInDeck;
+    
+    if (!alreadyInDeck) {
+      addButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.addCardToBattleDeck(cardData);
+      });
+    }
+    
+    // Bouton "Voir description"
+    const descButton = document.createElement('button');
+    descButton.className = 'card-hover-button description-btn';
+    descButton.textContent = 'Voir description';
+    descButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.showCardDescription(cardData);
+    });
+    
+    overlay.appendChild(addButton);
+    overlay.appendChild(descButton);
+    card.appendChild(overlay);
+  }
+  
+  // Afficher la modal de description d'une carte
+  showCardDescription(cardData) {
+    // Créer la modal
+    const modal = document.createElement('div');
+    modal.className = 'card-description-modal';
+    
+    const modalContent = document.createElement('div');
+    modalContent.className = 'card-description-content';
+    
+    // Header
+    const header = document.createElement('div');
+    header.className = 'card-description-header';
+    header.innerHTML = `
+      <h3>${cardData.name}</h3>
+      <button class="close-modal">&times;</button>
+    `;
+    
+    // Body
+    const body = document.createElement('div');
+    body.className = 'card-description-body';
+    
+    // Image de la carte
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'card-description-image';
+    const cardElement = createCard(cardData);
+    imageDiv.appendChild(cardElement);
+    
+    // Détails de la carte
+    const detailsDiv = document.createElement('div');
+    detailsDiv.className = 'card-description-details';
+    
+    // Stats
+    const hpRow = this.createStatRow('Points de Vie (PV)', `${cardData.hp} PV`);
+    const attackRow = this.createStatRow('Points de Combat (PC)', `${cardData.attack} PC`);
+    const idRow = this.createStatRow('ID Pokédex', `#${cardData.id}`);
+    
+    // Types
+    const typesRow = document.createElement('div');
+    typesRow.className = 'card-stat-row';
+    typesRow.innerHTML = `
+      <span class="card-stat-label">Type(s)</span>
+      <div class="card-types-display">
+        ${cardData.types ? cardData.types.map(type => 
+          `<span class="pokemon-type type-${type.toLowerCase()}">${type}</span>`
+        ).join('') : '<span class="pokemon-type type-unknown">?</span>'}
+      </div>
+    `;
+    
+    detailsDiv.appendChild(hpRow);
+    detailsDiv.appendChild(attackRow);
+    detailsDiv.appendChild(idRow);
+    detailsDiv.appendChild(typesRow);
+    
+    body.appendChild(imageDiv);
+    body.appendChild(detailsDiv);
+    
+    // Actions
+    const actions = document.createElement('div');
+    actions.className = 'card-description-actions';
+    
+    const addToDeckBtn = document.createElement('button');
+    addToDeckBtn.className = 'card-action-btn';
+    const alreadyInDeck = this.isCardInBattleSystem(cardData.name);
+    addToDeckBtn.textContent = alreadyInDeck ? 'Déjà dans le deck' : 'Ajouter au deck';
+    addToDeckBtn.disabled = alreadyInDeck;
+    
+    if (!alreadyInDeck) {
+      addToDeckBtn.addEventListener('click', () => {
+        this.addCardToBattleDeck(cardData);
+        modal.remove();
+      });
+    }
+    
+    actions.appendChild(addToDeckBtn);
+    
+    // Assembler la modal
+    modalContent.appendChild(header);
+    modalContent.appendChild(body);
+    modalContent.appendChild(actions);
+    modal.appendChild(modalContent);
+    
+    // Ajouter au DOM
+    document.body.appendChild(modal);
+    
+    // Gérer la fermeture
+    const closeBtn = header.querySelector('.close-modal');
+    closeBtn.addEventListener('click', () => modal.remove());
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+    
+    // Fermer avec Escape
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        modal.remove();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+  }
+  
+  // Créer une ligne de statistique pour la modal de description
+  createStatRow(label, value) {
+    const row = document.createElement('div');
+    row.className = 'card-stat-row';
+    row.innerHTML = `
+      <span class="card-stat-label">${label}</span>
+      <span class="card-stat-value">${value}</span>
+    `;
+    return row;
+  }
+  
   // Afficher un message à l'utilisateur
   showMessage(message, type = 'info') {
     const messageEl = document.createElement('div');
