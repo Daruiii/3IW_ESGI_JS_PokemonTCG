@@ -226,9 +226,17 @@ export class CombatManager {
     
     if (playerCardsLeft === 0) {
       this.showGameResult('Défaite ! Tous vos Pokémon ont été vaincus.');
+      // Enregistrer la défaite
+      if (window.addCombatResult) {
+        window.addCombatResult(false);
+      }
       this.endCombat();
     } else if (enemyCardsLeft === 0) {
       this.showGameResult('Victoire ! Vous avez vaincu tous les Pokémon ennemis !');
+      // Enregistrer la victoire
+      if (window.addCombatResult) {
+        window.addCombatResult(true);
+      }
       this.endCombat();
     }
   }
