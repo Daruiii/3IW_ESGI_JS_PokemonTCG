@@ -97,19 +97,29 @@
           </div>
         </section>
 
+        <!-- Dropdown historique des combats -->
+        <div class="combat-history-dropdown">
+          <button id="toggle-history-btn" class="toggle-history-btn">📜 Voir l'historique des combats</button>
+          <div id="combat-history" class="combat-history hidden">
+            <div id="combat-history-list" class="history-list">
+              <p class="no-history">Aucun combat joué pour le moment</p>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Onglet Paramètres -->
       <div class="tab-content" id="tab-settings">
         <div class="settings-area">
           <h2>⚙️ Paramètres</h2>
+
           <div class="settings-options">
             <button id="new-game-btn" class="danger-btn">🔄 Nouvelle partie</button>
             <p class="warning-text">⚠️ Attention : Ceci supprimera toutes vos données</p>
           </div>
         </div>
       </div>
-    </div>
   </main>
   <div id="modal-root"></div>
   <script type="module" src="app/main.js"></script>

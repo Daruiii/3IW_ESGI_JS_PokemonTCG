@@ -198,6 +198,172 @@
   transition: all 0.3s ease;
 }
 
+/* ===== DROPDOWN HISTORIQUE DES COMBATS ===== */
+
+.combat-history-dropdown {
+  margin: 20px 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-history-btn {
+  width: 100%;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.toggle-history-btn:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.toggle-history-btn:active {
+  transform: translateY(0);
+}
+
+.toggle-history-btn::after {
+  content: '▼';
+  position: absolute;
+  right: 20px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-history-btn.expanded::after {
+  transform: rotate(180deg);
+}
+
+.combat-history {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  background: white;
+}
+
+.combat-history:not(.hidden) {
+  max-height: 400px;
+  padding: 20px;
+}
+
+.combat-history.hidden {
+  max-height: 0;
+  padding: 0 20px;
+}
+
+.history-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  background: #f1f5f9;
+  transform: translateX(5px);
+}
+
+.history-item.victory {
+  border-left-color: #10b981;
+}
+
+.history-item.defeat {
+  border-left-color: #ef4444;
+}
+
+.history-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.history-result.victory {
+  color: #059669;
+}
+
+.history-result.defeat {
+  color: #dc2626;
+}
+
+.history-date {
+  font-size: 0.85rem;
+  color: #6b7280;
+  opacity: 0.8;
+}
+
+.no-history {
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+  padding: 30px 20px;
+}
+
+/* Scrollbar pour l'historique */
+.history-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive pour le dropdown */
+@media (max-width: 768px) {
+  .toggle-history-btn {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .combat-history:not(.hidden) {
+    padding: 15px;
+  }
+  
+  .history-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 10px 12px;
+  }
+  
+  .history-result {
+    align-self: flex-start;
+  }
+  
+  .history-date {
+    align-self: flex-end;
+    font-size: 0.8rem;
+  }
+}
+
 /* Effets de particules (optionnel) */
 .combat-particle {
   position: absolute;

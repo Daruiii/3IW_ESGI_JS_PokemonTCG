@@ -13,7 +13,13 @@ import { Timer } from './timer.js';
 let gameState = {
   collection: [], // Toutes les cartes possédées (permanentes dans la localStorage)
   battleDeck: [], // Deck de combat (construit à partir de la collection)
-  hand: []  // Main de combat (5 cartes max)
+  hand: [],  // Main de combat (5 cartes max)
+  // Statistiques de combat
+  combatStats: {
+    victories: 0,
+    defeats: 0,
+    history: [] // Historique des 20 derniers combats
+  }
 };
 
 // Managers pour les différentes zones, ces let la servent à initialiser les managers
@@ -40,6 +46,7 @@ function saveState() {
     collection: gameState.collection,
     battleDeck: gameState.battleDeck,
     hand: gameState.hand,
+    combatStats: gameState.combatStats,
     lastDraw: timer.lastDraw,
     isActive: timer.isActive
   };
@@ -59,6 +66,11 @@ function loadState() {
       gameState.collection = gameData.collection || [];
       gameState.battleDeck = gameData.battleDeck || [];
       gameState.hand = gameData.hand || [];
+      gameState.combatStats = gameData.combatStats || {
+        victories: 0,
+        defeats: 0,
+        history: []
+      };
       
       // Restaurer le timer si les données existent
       if (gameData.lastDraw) {
@@ -112,6 +124,7 @@ function onGameStateChanged() {
   battleDeckManager.renderBattleDeck();
   handManager.renderHandWithAnimation(); // Toujours avec animation
   combatManager.refresh(); // Rafraîchir l'affichage du combat
+  updateCombatStatsDisplay(); // Mettre à jour l'affichage des statistiques
   
   // Toujours sauvegarder
   saveState();
@@ -206,6 +219,130 @@ function setupDeckActions() {
   }
 }
 
+// ===== GESTION DE L'HISTORIQUE DES COMBATS =====
+
+// Ajouter un résultat de combat à l'historique
+function addCombatResult(isVictory) {
+  const now = new Date();
+  const combatResult = {
+    result: isVictory ? 'victory' : 'defeat',
+    date: now.toISOString(),
+    displayDate: now.toLocaleString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  };
+  
+  // Mettre à jour les statistiques
+  if (isVictory) {
+    gameState.combatStats.victories++;
+  } else {
+    gameState.combatStats.defeats++;
+  }
+  
+  // Ajouter au début de l'historique
+  gameState.combatStats.history.unshift(combatResult);
+  
+  // Garder seulement les 20 derniers combats
+  if (gameState.combatStats.history.length > 20) {
+    gameState.combatStats.history = gameState.combatStats.history.slice(0, 20);
+  }
+  
+  // Sauvegarder et mettre à jour l'affichage
+  saveState();
+  updateCombatStatsDisplay();
+}
+
+// Mettre à jour l'affichage des statistiques de combat
+function updateCombatStatsDisplay() {
+  const stats = gameState.combatStats;
+  const totalCombats = stats.victories + stats.defeats;
+  const winRate = totalCombats > 0 ? Math.round((stats.victories / totalCombats) * 100) : 0;
+  
+  // Mettre à jour les compteurs
+  const victoriesCount = document.getElementById('victories-count');
+  const defeatsCount = document.getElementById('defeats-count');
+  const totalCombatsCount = document.getElementById('total-combats-count');
+  const winratePercentage = document.getElementById('winrate-percentage');
+  
+  if (victoriesCount) victoriesCount.textContent = stats.victories;
+  if (defeatsCount) defeatsCount.textContent = stats.defeats;
+  if (totalCombatsCount) totalCombatsCount.textContent = totalCombats;
+  if (winratePercentage) winratePercentage.textContent = `${winRate}%`;
+  
+  // Mettre à jour l'historique
+  updateCombatHistoryDisplay();
+}
+
+// Mettre à jour l'affichage de l'historique détaillé
+function updateCombatHistoryDisplay() {
+  const historyList = document.getElementById('combat-history-list');
+  const clearHistoryBtn = document.getElementById('clear-history-btn');
+  
+  if (!historyList) return;
+  
+  const history = gameState.combatStats.history;
+  
+  if (history.length === 0) {
+    historyList.innerHTML = '<p class="no-history">Aucun combat joué pour le moment</p>';
+    if (clearHistoryBtn) clearHistoryBtn.disabled = true;
+    return;
+  }
+  
+  if (clearHistoryBtn) clearHistoryBtn.disabled = false;
+  
+  historyList.innerHTML = history.map(combat => {
+    const isVictory = combat.result === 'victory';
+    const icon = isVictory ? '🏆' : '💀';
+    const text = isVictory ? 'Victoire' : 'Défaite';
+    const className = isVictory ? 'victory' : 'defeat';
+    
+    return `
+      <div class="history-item ${className}">
+        <div class="history-result ${className}">
+          <span>${icon}</span>
+          <span>${text}</span>
+        </div>
+        <div class="history-date">${combat.displayDate}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Effacer l'historique des combats
+function clearCombatHistory() {
+  if (confirm('Voulez-vous vraiment effacer tout l\'historique des combats ?\nLes statistiques générales seront conservées.')) {
+    gameState.combatStats.history = [];
+    saveState();
+    updateCombatStatsDisplay();
+  }
+}
+
+// Configuration du dropdown de l'historique des combats
+function setupCombatHistoryDropdown() {
+  const toggleBtn = document.getElementById('toggle-history-btn');
+  const historyContainer = document.getElementById('combat-history');
+  
+  if (toggleBtn && historyContainer) {
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = historyContainer.classList.contains('hidden');
+      
+      if (isHidden) {
+        historyContainer.classList.remove('hidden');
+        toggleBtn.classList.add('expanded');
+        toggleBtn.textContent = '📜 Masquer l\'historique des combats';
+      } else {
+        historyContainer.classList.add('hidden');
+        toggleBtn.classList.remove('expanded');
+        toggleBtn.textContent = '📜 Voir l\'historique des combats';
+      }
+    });
+  }
+}
+
 // Initialisation principale
 // Cette fonction est appelée au chargement de la page pour initialiser le jeu
 // Elle charge l'état du jeu, initialise les managers et configure les boutons ensuite
@@ -251,12 +388,16 @@ function init() {
     // Configurer les boutons après l'initialisation des managers sinon ils seraient undefined
     setupDrawButton();
     setupDeckActions();
+    setupCombatHistoryDropdown();
     
     // Configurer le bouton Nouvelle partie
     const newGameBtn = document.getElementById('new-game-btn');
     if (newGameBtn) {
       newGameBtn.addEventListener('click', startNewGame);
     }
+    
+    // Affichage initial des statistiques de combat
+    updateCombatStatsDisplay();
     
     // Initialiser l'affichage du timer
     updateTimerUI();
@@ -281,5 +422,8 @@ function init() {
     document.body.innerHTML = `<p style="color:red">Erreur: ${err.message}</p>`;
   }
 }
+
+// Exposer addCombatResult globalement pour que le CombatManager puisse l'utiliser
+window.addCombatResult = addCombatResult;
 
 init();
