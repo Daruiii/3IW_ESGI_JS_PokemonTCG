@@ -1,4 +1,5 @@
 import { createCard, createCardBack } from './card.js';
+import { audioManager } from '../audio.js';
 
 // Gestion de la main du joueur
 export class HandManager {
@@ -38,6 +39,9 @@ export class HandManager {
 
   // Animation de la nouvelle carte ajoutée à la main
   async animateNewCard(cardData) {
+    // 🔊 Son de tirage de carte
+    audioManager.playCardDraw();
+    
     // Créer une carte temporaire face cachée
     const tempCard = createCardBack(cardData);
     tempCard.classList.add('card-fade-in');
@@ -50,6 +54,9 @@ export class HandManager {
     
     // Attendre la fin de l'animation fade-in
     await new Promise(resolve => setTimeout(resolve, 400));
+    
+    // 🔊 Son de retournement de carte
+    audioManager.playCardFlip();
     
     // Commencer l'animation flip
     tempCard.classList.add('card-animating');
