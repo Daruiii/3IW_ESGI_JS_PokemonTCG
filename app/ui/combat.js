@@ -1,4 +1,5 @@
 import { createCard } from './card.js';
+import { audioManager } from '../audio.js';
 
 export class CombatManager {
   constructor(gameState, onGameStateChanged) {
@@ -75,6 +76,9 @@ export class CombatManager {
     this.isInCombat = true;
     this.currentTurn = 'player';
     
+    // Jouer le son de début de combat
+    audioManager.playFight();
+    
     // Copier les équipes avec HP complets
     this.playerTeam = this.gameState.hand.map(pokemon => ({...pokemon, currentHp: pokemon.hp}));
     this.enemyTeam = this.getEnemyPokemons().map(pokemon => ({...pokemon, currentHp: pokemon.hp}));
@@ -91,6 +95,10 @@ export class CombatManager {
     this.enemyTeam = [];
     this.playerField.innerHTML = '';
     this.enemyField.innerHTML = '';
+    
+    // Arrêter le son de combat
+    audioManager.stopFight();
+    
     this.updateCombatDisplay();
   }
 

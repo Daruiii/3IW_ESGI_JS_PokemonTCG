@@ -1,4 +1,5 @@
 import { createCard } from './card.js';
+import { audioManager } from '../audio.js';
 
 // Gestion de la collection du joueur
 export class CollectionManager {
@@ -164,6 +165,9 @@ export class CollectionManager {
 
     // Ajouter la carte au deck de combat
     this.gameState.battleDeck.push(cardData);
+    
+    // 🔊 Son d'ajout de carte au deck
+    audioManager.playCardAdd();
     
     this.showMessage(`${cardData.name} ajouté au deck de combat`, 'success');
     
