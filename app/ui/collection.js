@@ -54,8 +54,12 @@ export class CollectionManager {
     const searchInput = document.getElementById('collection-search');
     
     if (searchInput) {
+      let timeout;
       searchInput.addEventListener('input', () => {
-        this.renderCollectionGrid(); // Re-render direct
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          this.renderCollectionGrid(); // Re-render après 300ms
+        }, 300);
       });
     }
   }
